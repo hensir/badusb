@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_4">
     <item row="0" column="0">
@@ -21,6 +24,33 @@
        <string>INPUT All In One</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QSplitter" name="splitter_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <widget class="QPushButton" name="pb_od">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>点击选择输入</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="pb_sk">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>键盘录制</string>
+          </property>
+         </widget>
+        </widget>
+       </item>
        <item row="1" column="0">
         <widget class="QSplitter" name="splitter_4">
          <property name="orientation">
@@ -164,40 +194,13 @@
          </widget>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QSplitter" name="splitter_5">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <widget class="QPushButton" name="pb_od">
-          <property name="font">
-           <font>
-            <pointsize>20</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>点击选择输入</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="pb_sk">
-          <property name="font">
-           <font>
-            <pointsize>20</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>模拟键盘输入</string>
-          </property>
-         </widget>
-        </widget>
-       </item>
       </layout>
      </widget>
     </item>
     <item row="0" column="1">
-     <widget class="QGroupBox" name="groupBox_3">
+     <widget class="QGroupBox" name="qc_group">
       <property name="title">
-       <string>Ctrl + V</string>
+       <string>Ctrl + C | Ctrl + V</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="2" column="0">
@@ -266,7 +269,7 @@
     <item row="0" column="2">
      <widget class="QGroupBox" name="groupBox">
       <property name="title">
-       <string>高级功能</string>
+       <string>Other</string>
       </property>
       <layout class="QGridLayout" name="gridLayout">
        <item row="1" column="0">

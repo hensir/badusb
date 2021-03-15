@@ -6,16 +6,6 @@ from myKeyDialog import QmyDialog
 from KEY import KeyShowdict, KeyInputdict, BadUSBCodes, DNDefine, ENDConst
 from DuckToDigi import Duckyspark_translator
 
-
-# TODO 一 pywin32扩展库有两个要做的
-# TODO    1是预览代码 我发现有个叫autogui的扩展
-# TODO    2是截获快捷键 比如win+e 。用pyhook方便一点
-# TODO 二 qss里做一个奶白色的主题
-# TODO 四 一个花里胡哨的功能 对话框的生成位置可以生成到主窗口的边缘 哪边距屏幕边缘远就靠在主窗口的哪边
-# TODO 六 textEdit的语法高亮 QSyntaxHighlighter
-
-# TODO 五 对话框中的 ctrl shift alt win 可以被按下 或者 对话框中所有的的按钮都可以被按下
-# TODO    反正放在缓冲区里 也很简单对吧
 # TODO 三 有优化的地方 按键处理 看一下 显示在textEdit的前一步 合成最终的input按键
 # TODO    可以使用 一 个函数 把所有的按键信号都链接过来 这样我们的三个窗口就只用一个合成函数了
 # TODO 这两步是一块的  define兼容那边可能有点问题 所有还是先把那个槽函数写出来 在考虑合并吧 槽函数选择特征值太憨
@@ -135,17 +125,19 @@ class QmyMainWindow(QMainWindow):
         digistr = Duckyspark_translator(duckystr)
         self.ui.TextEdit.setPlainText(digistr)
 
-    # TODO 我们先把对话框的那边的数值处理好 然后再来看一下的 编辑框
-    # TODO 我看到了在event那边的一个列表中 需要重新赋值 不过思路还是一样的
     @pyqtSlot(list, int)
     def MainInput(self, keylist, num):
-        if len(self._keystring) == 0 and num != 2:  # 如果编辑框为空 或者当前是第三
-            return
+        # if len(keylist) == 0 and num != 2:  # 如果编辑框为空 而且 当前是第三
+        #     return
 
+        # TODO 如果当前状态是松开 点击任何一个键都是 num = 2 上面这个判断我先不做
+        #
+        # TODO 0号字符串的拼合很重要 所以代码生成规范 现在就要做
+        # TODO 哈哈 好多东西感到了一块
         print("======================")
         print(keylist)
         print(num)
-        print("======================") # 接收成功
+        print("======================")  # 接收成功
 
         if num == 0:
             mystring = "DigiKeyboard.sendKeyStroke(%s);\n" % self._keystring
@@ -159,6 +151,8 @@ class QmyMainWindow(QMainWindow):
 
         for key in list(self._keystring.split(',')):
             key = key.lstrip()
+            print("这个key是%s"%key)
+
             if key in DNDefine:
                 print("当前按键" + key + "已被头文件定义")
                 continue  # 如果这个按键在这个列表中就不 定义 了
@@ -183,7 +177,7 @@ class QmyMainWindow(QMainWindow):
         self.ui.pb_od.setEnabled(enable)
 
     # =========快捷按钮 1234=================
-    @pyqtSlot()
+    @pyqtSlot()     # 这里也可以用数组处理 因为代码太重复了 完全可以遍历操作
     def on_pb_qc1_clicked(self):
         self.ui.TextEdit.clear()
         self._Definedconst.clear()  # 清空这个统计之后就能继续使用defind的功能了

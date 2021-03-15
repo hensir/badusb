@@ -15,6 +15,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(912, 805)
+        MainWindow.setStyleSheet("")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.centralwidget)
@@ -23,6 +24,20 @@ class Ui_MainWindow(object):
         self.groupBox_2.setObjectName("groupBox_2")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.groupBox_2)
         self.gridLayout_2.setObjectName("gridLayout_2")
+        self.splitter_5 = QtWidgets.QSplitter(self.groupBox_2)
+        self.splitter_5.setOrientation(QtCore.Qt.Horizontal)
+        self.splitter_5.setObjectName("splitter_5")
+        self.pb_od = QtWidgets.QPushButton(self.splitter_5)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.pb_od.setFont(font)
+        self.pb_od.setObjectName("pb_od")
+        self.pb_sk = QtWidgets.QPushButton(self.splitter_5)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.pb_sk.setFont(font)
+        self.pb_sk.setObjectName("pb_sk")
+        self.gridLayout_2.addWidget(self.splitter_5, 0, 0, 1, 1)
         self.splitter_4 = QtWidgets.QSplitter(self.groupBox_2)
         self.splitter_4.setOrientation(QtCore.Qt.Horizontal)
         self.splitter_4.setObjectName("splitter_4")
@@ -92,50 +107,36 @@ class Ui_MainWindow(object):
         self.pb_sp_ap.setFont(font)
         self.pb_sp_ap.setObjectName("pb_sp_ap")
         self.gridLayout_2.addWidget(self.splitter_4, 1, 0, 1, 1)
-        self.splitter_5 = QtWidgets.QSplitter(self.groupBox_2)
-        self.splitter_5.setOrientation(QtCore.Qt.Horizontal)
-        self.splitter_5.setObjectName("splitter_5")
-        self.pb_od = QtWidgets.QPushButton(self.splitter_5)
-        font = QtGui.QFont()
-        font.setPointSize(20)
-        self.pb_od.setFont(font)
-        self.pb_od.setObjectName("pb_od")
-        self.pb_sk = QtWidgets.QPushButton(self.splitter_5)
-        font = QtGui.QFont()
-        font.setPointSize(20)
-        self.pb_sk.setFont(font)
-        self.pb_sk.setObjectName("pb_sk")
-        self.gridLayout_2.addWidget(self.splitter_5, 0, 0, 1, 1)
         self.gridLayout_4.addWidget(self.groupBox_2, 0, 0, 1, 1)
-        self.groupBox_3 = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox_3.setObjectName("groupBox_3")
-        self.gridLayout_3 = QtWidgets.QGridLayout(self.groupBox_3)
+        self.qc_group = QtWidgets.QGroupBox(self.centralwidget)
+        self.qc_group.setObjectName("qc_group")
+        self.gridLayout_3 = QtWidgets.QGridLayout(self.qc_group)
         self.gridLayout_3.setObjectName("gridLayout_3")
-        self.pb_qc2 = QtWidgets.QPushButton(self.groupBox_3)
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        self.pb_qc2.setFont(font)
-        self.pb_qc2.setObjectName("pb_qc2")
-        self.gridLayout_3.addWidget(self.pb_qc2, 2, 0, 1, 1)
-        self.pb_qc3 = QtWidgets.QPushButton(self.groupBox_3)
+        self.pb_qc3 = QtWidgets.QPushButton(self.qc_group)
         font = QtGui.QFont()
         font.setPointSize(14)
         self.pb_qc3.setFont(font)
         self.pb_qc3.setObjectName("pb_qc3")
-        self.gridLayout_3.addWidget(self.pb_qc3, 0, 0, 1, 1)
-        self.pb_qc1 = QtWidgets.QPushButton(self.groupBox_3)
+        self.gridLayout_3.addWidget(self.pb_qc3, 2, 0, 1, 1)
+        self.pb_qc2 = QtWidgets.QPushButton(self.qc_group)
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.pb_qc2.setFont(font)
+        self.pb_qc2.setObjectName("pb_qc2")
+        self.gridLayout_3.addWidget(self.pb_qc2, 3, 0, 1, 1)
+        self.pb_qc1 = QtWidgets.QPushButton(self.qc_group)
         font = QtGui.QFont()
         font.setPointSize(14)
         self.pb_qc1.setFont(font)
         self.pb_qc1.setObjectName("pb_qc1")
-        self.gridLayout_3.addWidget(self.pb_qc1, 1, 0, 1, 1)
-        self.pb_qc4 = QtWidgets.QPushButton(self.groupBox_3)
+        self.gridLayout_3.addWidget(self.pb_qc1, 0, 0, 1, 1)
+        self.pb_qc4 = QtWidgets.QPushButton(self.qc_group)
         font = QtGui.QFont()
         font.setPointSize(14)
         self.pb_qc4.setFont(font)
         self.pb_qc4.setObjectName("pb_qc4")
-        self.gridLayout_3.addWidget(self.pb_qc4, 3, 0, 1, 1)
-        self.gridLayout_4.addWidget(self.groupBox_3, 0, 1, 1, 1)
+        self.gridLayout_3.addWidget(self.pb_qc4, 1, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.qc_group, 0, 1, 1, 1)
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox.setObjectName("groupBox")
         self.gridLayout = QtWidgets.QGridLayout(self.groupBox)
@@ -219,6 +220,8 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.groupBox_2.setTitle(_translate("MainWindow", "INPUT All In One"))
+        self.pb_od.setText(_translate("MainWindow", "点击选择输入"))
+        self.pb_sk.setText(_translate("MainWindow", "键盘录制"))
         self.label_3.setText(_translate("MainWindow", "按键识别输入"))
         self.label.setText(_translate("MainWindow", "打印字符串"))
         self.label_2.setText(_translate("MainWindow", "Sleep"))
@@ -228,52 +231,49 @@ class Ui_MainWindow(object):
         self.cb_ci_ap.setItemText(2, _translate("MainWindow", "松开"))
         self.pb_ps_ap.setText(_translate("MainWindow", "添加"))
         self.pb_sp_ap.setText(_translate("MainWindow", "添加"))
-        self.pb_od.setText(_translate("MainWindow", "点击选择输入"))
-        self.pb_sk.setText(_translate("MainWindow", "模拟键盘输入"))
-        self.groupBox_3.setTitle(_translate("MainWindow", "Ctrl + V"))
-        self.pb_qc2.setToolTip(_translate("MainWindow", "使用Powershell使计算机说出一条消息"))
-        self.pb_qc2.setText(_translate("MainWindow", "PowerShell讲话"))
+        self.qc_group.setTitle(_translate("MainWindow", "Ctrl + C | Ctrl + V"))
         self.pb_qc3.setToolTip(_translate("MainWindow", "打开模糊的Windows终端，使其无法控制地自我复制，从而导致机器锁定或崩溃"))
         self.pb_qc3.setText(_translate("MainWindow", "无限终端"))
+        self.pb_qc2.setToolTip(_translate("MainWindow", "使用Powershell使计算机说出一条消息"))
+        self.pb_qc2.setText(_translate("MainWindow", "PowerShell讲话"))
         self.pb_qc1.setToolTip(_translate("MainWindow", "以隐藏模式下载并执行Powershell脚本"))
         self.pb_qc1.setText(_translate("MainWindow", "执行PS的PayLoad"))
         self.pb_qc4.setToolTip(_translate("MainWindow", "创建一个新的管理员帐户并有选择地将其隐藏"))
         self.pb_qc4.setText(_translate("MainWindow", "隐藏管理员账户"))
-        self.groupBox.setTitle(_translate("MainWindow", "高级功能 "))
+        self.groupBox.setTitle(_translate("MainWindow", "Other"))
         self.pb_pcr.setText(_translate("MainWindow", "预览代码"))
         self.pb_dtd.setText(_translate("MainWindow", "DuckySpark 转DigiSpark"))
         self.TextEdit.setPlainText(_translate("MainWindow", "#include \"DigiKeyboard.h\"\n"
-                                                            "\n"
-                                                            "void setup() {\n"
-                                                            "\n"
-                                                            "DigiKeyboard.delay(2000);//开机延迟两秒钟，用于系统识别Digispark\n"
-                                                            "\n"
-                                                            "DigiKeyboard.sendKeyStroke(0);\n"
-                                                            "\n"
-                                                            "DigiKeyboard.sendKeyStroke(KEY_R, MOD_GUI_LEFT);//按R和win键，打开运行\n"
-                                                            "\n"
-                                                            "DigiKeyboard.delay(100);\n"
-                                                            "\n"
-                                                            "DigiKeyboard.println(\"cmd\");\n"
-                                                            "\n"
-                                                            "DigiKeyboard.delay(500);\n"
-                                                            "\n"
-                                                            "DigiKeyboard.sendKeyStroke(KEY_ENTER);//按回车\n"
-                                                            "\n"
-                                                            "DigiKeyboard.delay(2000);\n"
-                                                            "\n"
-                                                            "//DigiKeyboard.println(\"reg add \"HKEY_LOCAL_MACHINE\'\\SOFTWARE\'\\Microsoft\'\\Windows NT\'\\CurrentVersion\'\\Image File Execution Options\'\\sethc.exe\" /v \"Debugger\" /t REG_SZ /d \"C:\'\\windows\'\\system32\'\\cmd.exe\");\n"
-                                                            "\n"
-                                                            "DigiKeyboard.sendKeyStroke(KEY_ENTER);//按回车\n"
-                                                            "\n"
-                                                            "\n"
-                                                            "\n"
-                                                            "}\n"
-                                                            "\n"
-                                                            "void loop() {\n"
-                                                            "\n"
-                                                            "}\n"
-                                                            ""))
+"\n"
+"void setup() {\n"
+"\n"
+"DigiKeyboard.delay(2000);//开机延迟两秒钟，用于系统识别Digispark\n"
+"\n"
+"DigiKeyboard.sendKeyStroke(0);\n"
+"\n"
+"DigiKeyboard.sendKeyStroke(KEY_R, MOD_GUI_LEFT);//按R和win键，打开运行\n"
+"\n"
+"DigiKeyboard.delay(100);\n"
+"\n"
+"DigiKeyboard.println(\"cmd\");\n"
+"\n"
+"DigiKeyboard.delay(500);\n"
+"\n"
+"DigiKeyboard.sendKeyStroke(KEY_ENTER);//按回车\n"
+"\n"
+"DigiKeyboard.delay(2000);\n"
+"\n"
+"//DigiKeyboard.println(\"reg add \"HKEY_LOCAL_MACHINE\'\\SOFTWARE\'\\Microsoft\'\\Windows NT\'\\CurrentVersion\'\\Image File Execution Options\'\\sethc.exe\" /v \"Debugger\" /t REG_SZ /d \"C:\'\\windows\'\\system32\'\\cmd.exe\");\n"
+"\n"
+"DigiKeyboard.sendKeyStroke(KEY_ENTER);//按回车\n"
+"\n"
+"\n"
+"\n"
+"}\n"
+"\n"
+"void loop() {\n"
+"\n"
+"}"))
         self.toolBar.setWindowTitle(_translate("MainWindow", "toolBar"))
         self.action_copy.setText(_translate("MainWindow", "复制"))
         self.action_clear.setText(_translate("MainWindow", "清空"))
