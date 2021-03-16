@@ -1330,3 +1330,24 @@ ENDConst = {
     "key_ScrollLock": "84",
     "key_Menu": "76",
 }
+
+# KeyDialogTranslate
+KDT = {
+    "Ctrl": "MOD_CONTROL_LEFT",
+    "Shift": "MOD_SHIFT_LEFT",
+    "Alt": "MOD_ALT_LEFT",
+    "Win": "MOD_GUI_LEFT",
+    "Space": "KEY_SPACE",
+    "Enter": "KEY_ENTER",
+}
+
+# "": "",
+# "": "",
+# "": "",
+# "": "",
+# "": "",
+# "": "",
+# "": "",
+# "": "",
+# "": "",
+# "": "",

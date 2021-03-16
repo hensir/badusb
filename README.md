@@ -7,7 +7,13 @@ ui_mainwindow.py    主程序窗体文件
 
 ui_keyDialog.py     案件对话框窗体文件
 
-KEY.py  按键映射文件                 
+KEY.py  按键映射文件(其中含有以下常数)
+    - KeyShowdict字典  用来显示在编辑框的按键字符串
+    - KeyInputdict字典 用来显示在TextEdit的按键字符串
+    - DialogKeyPushButton字典 用来创建对话框中的按钮的字典 同时存储了对应的十六进制数值 用于后期define
+    - BadUSBCodes字符串列表 存储BadUSB代码的一个列表 元素都是字符串变量 方便后期添加
+    - DNDefine列表 Dont need define 不需要define的按键
+    - ENDConst列表 编辑框可接受 但未被头文件定义的按键常量 edit not define const
 
 # 软件说明
 如果使用了头文件没有定义的按钮 将会由我的软件定义一个常量 他的前缀会是小写的key 
@@ -15,6 +21,7 @@ KEY.py  按键映射文件
 # 未实现功能
 ## 现在
 
+### 玩崩了 准备重构了
 ### 代码优化
 两个lineEdit 可能可以用一个槽函数来做主输入 目前是 传过来 keylist和keystatus
 #### 先看一下
@@ -63,4 +70,9 @@ DigiKeyboard.sendKeyPress(0);   # 开两秒的资源管理器
 ### 界面小优化
 智能的花里胡哨 对话框的生成位置可以生成到主窗口的边缘 哪边距屏幕边缘远就靠在主窗口的哪边
 ### 鼠标操作
-看到还有操作
+看到还有这个光标的移动操作
+### 键盘录制
+### define替换
+就是说 DigiKeyboard.delay(100); 可以用defin换为 delay(100)
+DigiKeyboard.sendKeyStroke(KEY_ENTER);  简化为
+或许还能做到通写Duckyspark

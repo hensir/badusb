@@ -3,12 +3,15 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QFontDialog, QPus
 from PyQt5.QtCore import pyqtSlot, Qt, QEvent, pyqtSignal
 from ui_mainwindow import Ui_MainWindow
 from myKeyDialog import QmyDialog
-from KEY import KeyShowdict, KeyInputdict, BadUSBCodes, DNDefine, ENDConst
+from KEY import KeyShowdict, KeyInputdict, BadUSBCodes, DNDefine, ENDConst, KDT
 from DuckToDigi import Duckyspark_translator
+
 
 # TODO 三 有优化的地方 按键处理 看一下 显示在textEdit的前一步 合成最终的input按键
 # TODO    可以使用 一 个函数 把所有的按键信号都链接过来 这样我们的三个窗口就只用一个合成函数了
 # TODO 这两步是一块的  define兼容那边可能有点问题 所有还是先把那个槽函数写出来 在考虑合并吧 槽函数选择特征值太憨
+
+# TODO 上面的先不管  我们还是恢复过来 一个信号一个槽函数 te对接一个吧
 
 
 class QmyMainWindow(QMainWindow):
@@ -97,7 +100,12 @@ class QmyMainWindow(QMainWindow):
     @pyqtSlot(int)
     def on_cb_ci_ap_activated(self, num):
         """单击 按下 松开"""
-        if num == 2:  # 如果当前选项为 松开 则禁用编辑框
+        if num == 0:
+            keylist = list(self._keystring.split(","))
+            self.MainInput(keylist, num, 0)
+        elif num == 1:
+            self.MainInput(self._keystring, num, 0)
+        elif num == 2:  # 如果当前选项为 松开 则禁用编辑框
             self.ui.le_ci.setEnabled(False)
         else:
             self.ui.le_ci.setEnabled(True)
@@ -125,19 +133,45 @@ class QmyMainWindow(QMainWindow):
         digistr = Duckyspark_translator(duckystr)
         self.ui.TextEdit.setPlainText(digistr)
 
-    @pyqtSlot(list, int)
-    def MainInput(self, keylist, num):
+    @pyqtSlot(list, int, int)
+    def MainInput(self, keylist, num, status):
         # if len(keylist) == 0 and num != 2:  # 如果编辑框为空 而且 当前是第三
         #     return
 
         # TODO 如果当前状态是松开 点击任何一个键都是 num = 2 上面这个判断我先不做
-        #
-        # TODO 0号字符串的拼合很重要 所以代码生成规范 现在就要做
-        # TODO 哈哈 好多东西感到了一块
+        # TODO 依旧是0号字符串 我们现在知道了 先人的思路 首先keylist
+        # TODO 一个大麻烦是 这个 0号字符串的规范 我们的规范牵扯的转换实在是太多了
+        # TODO 显示个print 后世一个ENDConst 这里注意一下哈 ENDConst智能接收主界面的
+        # TODO 那个lineedit
+        # TODO 独立 DND和END都是给编辑框准备的 而不是对话框 如果我们不处理对话框 直接从主界面
+        # TODO 传出现在的数值 是不是还是能用的
+        # TODO 首先我是希望这keydialog是可以复用的 所以keydialog就只负责传送正常的按键字符
+        # TODO 所以转换就有maininput来做了
+        # TODO 记得 这个keydialog有几个主键盘按键是没有tooltip的 所以 不管(先)
+        # TODO ctrl和那几个不需要的声明的 好像是需要if独立判断的
+        # TODO 现在maininput把这个本地给做出来吧
+
         print("======================")
         print(keylist)
         print(num)
+        print(status)
         print("======================")  # 接收成功
+
+        # 处理以下对话框 对他进行一个追加 key 然后是 upper
+        # 还是先看keystring
+        if status == 1:
+            self._keystring = ""
+            for key in keylist:
+                if key in ("Ctrl", "Shift", "Alt", "Win", "Space", "Enter"):
+                    if len(self._keystring) == 0:
+                        self._keystring = KDT[key]
+                    else:
+                        self._keystring += ", " + KDT[key]
+                else:
+                    if len(self._keystring) == 0:
+                        self._keystring = "KEY_" + key.upper()
+                    else:
+                        self._keystring += ", KEY_" + key.upper()
 
         if num == 0:
             mystring = "DigiKeyboard.sendKeyStroke(%s);\n" % self._keystring
@@ -149,27 +183,26 @@ class QmyMainWindow(QMainWindow):
             mystring = "DigiKeyboard.sendKeyPress(0);\n"
             self.ui.TextEdit.insertPlainText(mystring)
 
-        for key in list(self._keystring.split(',')):
-            key = key.lstrip()
-            print("这个key是%s"%key)
 
+        for key in keylist:
+            key = key.lstrip()
             if key in DNDefine:
                 print("当前按键" + key + "已被头文件定义")
                 continue  # 如果这个按键在这个列表中就不 定义 了
             else:
                 print("当前按键" + key + "未被头文件定义")
-                if ENDConst[key] not in self._Definedconst:
-                    print("当前按键" + key + "已被软件定义")
-                    # print("已禁用快捷代码组")
-                    # self.ui.qc_group.setEnabled(False)
-                    text = list(self.ui.TextEdit.toPlainText().split('\n'))
-                    pos = text.index("#include \"DigiKeyboard.h\"") + 1  # 这是一个列表 所以注意 加一之后的位置
-                    text.insert(pos, "#define %s %s" % (key, ENDConst[key]))  # 在指定位置插入define
-                    # print(text)
-                    self.ui.TextEdit.clear()
-                    self.ui.TextEdit.insertPlainText("\n".join(text))  # 给TextEdit刷新以下
-                    self._Definedconst.append(ENDConst[key])  # 添加到列表中 以判断是否重复定义
-                else:
+                try:
+                    if ENDConst[key] not in self._Definedconst:
+                        print("当前按键" + key + "已被软件定义")
+                        text = list(self.ui.TextEdit.toPlainText().split('\n'))
+                        pos = text.index("#include \"DigiKeyboard.h\"") + 1  # 这是一个列表 所以注意 加一之后的位置
+                        text.insert(pos, "#define %s %s" % (key, ENDConst[key]))  # 在指定位置插入define
+                        self.ui.TextEdit.clear()
+                        self.ui.TextEdit.insertPlainText("\n".join(text))  # 给TextEdit刷新以下
+                        self._Definedconst.append(ENDConst[key])  # 添加到列表中 以判断是否重复定义
+                    else:
+                        continue
+                except KeyError:
                     continue
 
     @pyqtSlot(bool)
@@ -177,7 +210,7 @@ class QmyMainWindow(QMainWindow):
         self.ui.pb_od.setEnabled(enable)
 
     # =========快捷按钮 1234=================
-    @pyqtSlot()     # 这里也可以用数组处理 因为代码太重复了 完全可以遍历操作
+    @pyqtSlot()  # 这里也可以用数组处理 因为代码太重复了 完全可以遍历操作
     def on_pb_qc1_clicked(self):
         self.ui.TextEdit.clear()
         self._Definedconst.clear()  # 清空这个统计之后就能继续使用defind的功能了

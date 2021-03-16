@@ -12,7 +12,7 @@ from KEY import DialogKeyPushButton
 # TODO 要注意我们的主界面也是没有相对的解决办法的 错误代码了哈哈
 
 class QmyDialog(QDialog):
-    ButtonClick = pyqtSignal(list, int)
+    ButtonClick = pyqtSignal(list, int, int)
     changePBEnable = pyqtSignal(bool)  # 用于设置主窗口的Action的Enabled
 
     def __init__(self, parent=None):
@@ -114,7 +114,7 @@ class QmyDialog(QDialog):
             self.num = 1
         elif self.ui.release.isChecked():
             self.num = 2
-        self.ButtonClick.emit(self._rtspb, self.num)
+        self.ButtonClick.emit(self._rtspb, self.num, 1)
 
     @pyqtSlot()
     def on_pb_le_clear_clicked(self):
@@ -131,11 +131,12 @@ class QmyDialog(QDialog):
             name = pre + "+" + name
             self.ui.lineEdit.setText(name)
 
-    @pyqtSlot(list, int)
-    def signaltest(self, keylist, num):
-        print("==============")
+    @pyqtSlot(list, int, int)
+    def signaltest(self, keylist, num, status):
+        print("======signaltest=======")
         print(keylist)
         print(num)
+        print(status)
         print("==============")
 
     def showEvent(self, event):  # 对话框显示事件
