@@ -1,6 +1,7 @@
 import sys
 
 from PyQt5.QtCore import pyqtSlot, QDir, QFile, QIODevice
+from PyQt5.QtGui import QTextOption
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMdiArea, QMessageBox
 
 from myFromDoc import FromDoc
@@ -131,6 +132,11 @@ class QMyDocument(QMainWindow):
         else:  # 子窗口模式
             self.ui.mdi.setViewMode(QMdiArea.SubWindowView)  # 子窗口模式
 
+    @pyqtSlot()
+    def on_act_Wrap_triggered(self):
+
+        pass
+
     # @pyqtSlot(type)
     def on_mdi_subWindowActivated(self, mdisubwindow):  # 参数为当前激活窗口
         try:
@@ -146,24 +152,24 @@ class QMyDocument(QMainWindow):
             self.formDoc = curmdiwidget
             self.ui.StatusB.showMessage(self.formDoc.currentFileName())  # 显示子窗口的文件名
         # ---- 断开上一个窗口的信号连接 ----
-        if cnt >= 2:
-            mdiprewidget = mdisubwindowlist[-2].widget()
-            try:  # 这个地方 其实改写 也简单 就是on_act_Undo的槽函数 然后函数里面有个form指向当前窗口 进行一个tE.undo 重复的写一下就好了
-                self.ui.act_Undo.triggered.disconnect(mdiprewidget.tE.undo)  # 或者是我没写下来的那个 就是可以检测一个槽函数有没有被链接的状态
-                self.ui.act_Redo.triggered.disconnect(mdiprewidget.tE.redo)
-                self.ui.act_Cut.triggered.disconnect(mdiprewidget.tE.cut)
-                self.ui.act_Copy.triggered.disconnect(mdiprewidget.tE.copy)
-                self.ui.act_Paste.triggered.disconnect(mdiprewidget.tE.paste)
-                self.ui.act_SelectAll.triggered.disconnect(mdiprewidget.tE.selectAll)
-                self.ui.act_Font.triggered.disconnect(mdiprewidget.textSetFont)
-                self.ui.act_ZoomIn.triggered.disconnect(mdiprewidget.tE.zoomIn)
-                self.ui.act_ZoomOut.triggered.disconnect(mdiprewidget.tE.zoomOut)
-                self.ui.act_DefaultZoom.triggered.disconnect(lambda: mdiprewidget.tE.setFont(curmdiwidget.font))
-                print("上一个窗口组件信号已解除")
-            except TypeError as e:
-                print(e)
-            except Exception as e:
-                print(e)
+        try:  # 这个地方 其实改写 也简单 就是on_act_Undo的槽函数 然后函数里面有个form指向当前窗口 进行一个tE.undo 重复的写一下就好了
+            self.ui.act_Undo.triggered.disconnect()  # 或者是我没写下来的那个 就是可以检测一个槽函数有没有被链接的状态
+            self.ui.act_Redo.triggered.disconnect()
+            self.ui.act_Cut.triggered.disconnect()
+            self.ui.act_Copy.triggered.disconnect()
+            self.ui.act_Paste.triggered.disconnect()
+            self.ui.act_SelectAll.triggered.disconnect()
+            self.ui.act_Font.triggered.disconnect()
+            self.ui.act_ZoomIn.triggered.disconnect()
+            self.ui.act_ZoomOut.triggered.disconnect()
+            self.ui.act_DefaultZoom.triggered.disconnect()
+            self.ui.act_Wrap.triggered.disconnect()
+            print("上一个窗口组件信号已解除")
+        except TypeError as e:
+            print(e)
+        except Exception as e:
+            print(e)
+
         # ---- 当前激活窗口的信号连接 ----
         self.ui.act_Undo.triggered.connect(curmdiwidget.tE.undo)
         self.ui.act_Redo.triggered.connect(curmdiwidget.tE.redo)
@@ -175,6 +181,7 @@ class QMyDocument(QMainWindow):
         self.ui.act_ZoomIn.triggered.connect(curmdiwidget.tE.zoomIn)
         self.ui.act_ZoomOut.triggered.connect(curmdiwidget.tE.zoomOut)
         self.ui.act_DefaultZoom.triggered.connect(lambda: curmdiwidget.tE.setFont(curmdiwidget.font))
+        self.ui.act_Wrap.triggered.connect(curmdiwidget.mysetWordWrapMode)
         print("当前窗口组件信号已连接")
 
 

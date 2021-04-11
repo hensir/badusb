@@ -1,18 +1,18 @@
 # 文件说明
-ui_document.py      # 主窗口UI
-    - myFromDoc.py        # MDI需要使用的文本框  考虑放到一个文件里
-myDocument.py       # 主窗口 MDI
-
-ui_function.py      # 功能区组件UI 
-    - ui_selectdialog.py  # 功能区组件点击选择对话框UI
-        -- Enmu_Key.py         # 功能区组件点击选择对话框需要用到的各种"枚举"变量
-            --! DialogKeyPushButton   用来创建对话框中的按钮的字典 同时存储了对应的十六进制数值 用于后期define
-    - mySelectDialog.py   # 功能区组件点击选择对话框业务逻辑文件
-    - DuckToDigi.py       # 功能区组件点击选择对话框中Ducky脚本转换成Digi语法的一个函数文件
-    - CodeList.py         # 功能区组件点击选择对话框中 存储第二个层叠窗口中ListWidget中的项的data
-myFunction.py       # 功能区组件业务逻辑文件
-
-myFunDoc.py         # Function加上Document 就是最终的窗口啦
+    ui_document.py      # 主窗口UI
+        - myFromDoc.py        # MDI需要使用的文本框  考虑放到一个文件里
+    myDocument.py       # 主窗口 MDI
+    
+    ui_function.py      # 功能区组件UI 
+        - ui_selectdialog.py  # 功能区组件点击选择对话框UI
+            -- Enmu_Key.py         # 功能区组件点击选择对话框需要用到的各种"枚举"变量
+                --! DialogKeyPushButton   用来创建对话框中的按钮的字典 同时存储了对应的十六进制数值 用于后期define
+        - mySelectDialog.py   # 功能区组件点击选择对话框业务逻辑文件
+        - DuckToDigi.py       # 功能区组件点击选择对话框中Ducky脚本转换成Digi语法的一个函数文件
+        - CodeList.py         # 功能区组件点击选择对话框中 存储第二个层叠窗口中ListWidget中的项的data
+    myFunction.py       # 功能区组件业务逻辑文件
+    
+    myFunDoc.py         # Function加上Document 就是最终的窗口啦
 
 # 软件说明
 如果使用了头文件没有定义的按钮 将会由我的软件定义一个常量 他的前缀会是小写的key 

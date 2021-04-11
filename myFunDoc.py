@@ -23,6 +23,7 @@ class QMyFunDoc(QMyDocument):
         self.on_act_New_triggered()
         self.formDoc.setWindowTitle("DigiKeyboard头文件")
         self.formDoc.tE.setText(DigiKeyboardH)
+        self.on_act_New_triggered()
         self.ui.mdi.tileSubWindows()
         # ---- 设置功能区信号 ----
         self.fun.ClickListItem.connect(self.OpenListItem)  # 单信号结束
@@ -71,18 +72,16 @@ class QMyFunDoc(QMyDocument):
             self.formDoc = curmdiwidget
             self.ui.StatusB.showMessage(self.formDoc.currentFileName())  # 显示子窗口的文件名
         # ---- 断开上一个窗口的信号连接 ----
-        if cnt >= 2:
-            mdiprewidget = mdisubwindowlist[-2].widget()
-            try:  # 这个地方 其实改写 也简单 就是on_act_Undo的槽函数 然后函数里面有个form指向当前窗口 进行一个tE.undo 重复的写一下就好了
-                self.fun.ClickAppendPb.disconnect(mdiprewidget.tE.append)  # 三个信号  两个直接 接上
-                self.fun.ClickKeySignal.disconnect(mdiprewidget.tE.insertPlainText)
-                # print("上一个窗口组件信号已解除")
-            except TypeError as e:
-                print(e)
-            except Exception as e:
-                print(e)
+        try:
+            self.fun.ClickAppendPb.disconnect()
+            self.fun.ClickKeySignal.disconnect()
+            # print("上一个窗口组件信号已解除")
+        except TypeError as e:      # 新信号切换依旧有NoneType的问题
+            print(e)
+        except Exception as e:
+            print(e)
         # ---- 当前激活窗口的信号连接 ----
-        self.fun.ClickAppendPb.connect(curmdiwidget.tE.append)
+        self.fun.ClickAppendPb.connect(curmdiwidget.tE.insertPlainText)
         self.fun.ClickKeySignal.connect(curmdiwidget.tE.insertPlainText)
         # print("当前窗口组件信号已连接")  # 这里一个 多态  如果不注释的 下面调用父类的方法后就会有两个print
         super().on_mdi_subWindowActivated(mdisubwindow)

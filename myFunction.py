@@ -24,6 +24,8 @@ class QMyFunction(QWidget):
         print("层叠页面有" + str(self.ui.stackedWidget.count()) + "个")
         self.Codelist_Init()
 
+    # ---- 自动连接的信号 ----
+
     @pyqtSlot()
     def on_PrevStacked_clicked(self):
         self.curstackpageindex -= 1
@@ -57,20 +59,12 @@ class QMyFunction(QWidget):
     @pyqtSlot()
     def on_LSEPushButton_clicked(self):
         text2 = "DigiKeyboard.print(\"%s\");" % (self.ui.LineStrEdit.text())
-        self.ClickAppendPb.emit(text2)
+        self.ClickAppendPb.emit(text2 + "\n")
 
     @pyqtSlot()
     def on_SSBPButton_clicked(self):
         text2 = r"DigiKeyboard.delay(%s);" % (self.ui.SleepSpinBox.value())
-        self.ClickAppendPb.emit(text2)
-
-    @pyqtSlot()
-    def Codelist_Init(self):  # 初始化CodeListWIdget
-        for codeinfo in CodeList:
-            aItem = QListWidgetItem()
-            aItem.setText(codeinfo[0])
-            aItem.setData(Qt.UserRole, codeinfo)
-            self.ui.CListWidget.addItem(aItem)
+        self.ClickAppendPb.emit(text2 + "\n")
 
     @pyqtSlot(QListWidgetItem)
     def on_CListWidget_itemDoubleClicked(self, item):  # 双击发送信号 打开新文档
@@ -84,6 +78,16 @@ class QMyFunction(QWidget):
         ShortCutList = ["".join(x.split()) for i in ShortCutList for x in
                         i]  # for嵌套的列表推导式 注 前一for迭代值是后一for的迭代器 最后又加了一个list转str
         self.KeySignal(ShortCutList, keytype)
+
+    # ---- 自定义的函数和槽函数 ----
+
+    @pyqtSlot()
+    def Codelist_Init(self):  # 初始化CodeListWIdget
+        for codeinfo in CodeList:
+            aItem = QListWidgetItem()
+            aItem.setText(codeinfo[0])
+            aItem.setData(Qt.UserRole, codeinfo)
+            self.ui.CListWidget.addItem(aItem)
 
     @pyqtSlot(list, int)
     def KeySignal(self, text2send, keytype):  # 申错的太简单 而且现在还没做常量对换
@@ -126,9 +130,8 @@ class QMyFunction(QWidget):
             else:
                 text += text2send[0]
             text += ");"
-        elif keytype == 2:
+        else:
             text = "DigiKeyboard.sendKeyPress(0);"
-
         self.ClickKeySignal.emit(text + "\n")
         if status:
             self.AppendPatchKey.emit(patchtext + "\n")

@@ -1,6 +1,7 @@
 import os
 import sys
 from PyQt5.QtCore import Qt, QFile, QIODevice
+from PyQt5.QtGui import QTextOption
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTextEdit, QGridLayout, QWidget, \
     QFontDialog
 
@@ -13,7 +14,7 @@ class FromDoc(QMainWindow):
         self.setAttribute(Qt.WA_DeleteOnClose)  # MDI子窗口会被自动删除
         self.__fileOpened = ""
         self.currentFilePath = ""
-        self.defined = []
+        self.defined = []  # 已经出现的按键 绑定给本体了
 
     def setupUi(self):
         self.resize(666, 401)
@@ -27,6 +28,9 @@ class FromDoc(QMainWindow):
         self.tE.setFont(self.font)
         self.gL.addWidget(self.tE, 0, 0, 1, 1)
         self.setCentralWidget(self.widget)
+        self.tE.setWordWrapMode(QTextOption.NoWrap)
+        # self.tE.setWordWrapMode(QTextOption.WrapAtWordBoundaryOrAnywhere)
+        print(self.tE.wordWrapMode())
 
     def loadFromFile(self, filename):  # 打开文件
         self.currentFilePath = filename
@@ -62,6 +66,13 @@ class FromDoc(QMainWindow):
         font, OK = QFontDialog.getFont(iniFont)  # 选择字体, 注意与C++版本不同
         if OK:  # 选择有效
             self.tE.setFont(font)
+
+    def mysetWordWrapMode(self):
+        if self.tE.wordWrapMode() == 0:
+            self.tE.setWordWrapMode(QTextOption.WrapAtWordBoundaryOrAnywhere)
+        else:
+            self.tE.setWordWrapMode(QTextOption.NoWrap)
+        print("666")
 
 
 if __name__ == "__main__":  # 用于当前窗体测试
