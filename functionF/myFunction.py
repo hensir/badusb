@@ -1,12 +1,11 @@
 import sys
 
-from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QListWidgetItem
+from PyQt5.QtWidgets import QApplication, QWidget, QListWidgetItem
 from PyQt5.QtCore import pyqtSlot, Qt, pyqtSignal
-from ui_function import Ui_Form  # 功能区
-from mySelectDialog import QMySelectDialog  # 功能区的点击选择的按钮
-from CodeList import CodeList  # listwidget等会初始化
-from Enmu_Key import GlobalReplacement, DialogKeyPushButton, DKPB
+from functionF.ui_function import Ui_Form  # 功能区
+from functionF.mySelectDialog import QMySelectDialog  # 功能区的点击选择的按钮
+from functionF.CodeList import CodeList  # listwidget等会初始化
+from functionF.Enmu_Key import GlobalReplacement, DKPB
 
 
 class QMyFunction(QWidget):
@@ -14,6 +13,7 @@ class QMyFunction(QWidget):
     ClickListItem = pyqtSignal(list)
     ClickKeySignal = pyqtSignal(str)
     AppendPatchKey = pyqtSignal(str)
+    PressButton = pyqtSignal(list, int)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -27,7 +27,7 @@ class QMyFunction(QWidget):
     # ---- 自动连接的信号 ----
 
     @pyqtSlot()
-    def on_PrevStacked_clicked(self):
+    def on_PrevStacked_clicked(self):   # 层叠组件上一页
         self.curstackpageindex -= 1
         if self.curstackpageindex < 0:
             self.curstackpageindex = self.ui.stackedWidget.count() - 1
@@ -35,21 +35,13 @@ class QMyFunction(QWidget):
         self.ui.stackedWidget.setCurrentIndex(self.curstackpageindex)
 
     @pyqtSlot()
-    def on_NextStacked_clicked(self):
+    def on_NextStacked_clicked(self):   # 层叠组件下一页
         self.curstackpageindex += 1
         if self.curstackpageindex >= self.ui.stackedWidget.count():
             self.curstackpageindex = 0
         print(self.curstackpageindex)
         self.ui.stackedWidget.setCurrentIndex(self.curstackpageindex)
 
-    @pyqtSlot()
-    def on_ClickToInPB_clicked(self):
-        """这个是 点击输入按钮"""
-        self.__dialog = QMySelectDialog()  # 按键对话框
-        self.__dialog.setAttribute(Qt.WA_DeleteOnClose)  # 对话框关闭时自动删除
-        self.__dialog.ButtonClick.connect(self.KeySignal)
-        self.__dialog.changePBEnable.connect(self.ui.ClickToInPB.setEnabled)
-        self.__dialog.show()
 
     # @pyqtSlot()
     # def on_toDigiPB_clicked(self):
@@ -77,7 +69,7 @@ class QMyFunction(QWidget):
                         self.ui.KeySeqEdit.keySequence().toString().split(',')]  # 哈哈哈 这两句别砍我  # short cut list
         ShortCutList = ["".join(x.split()) for i in ShortCutList for x in
                         i]  # for嵌套的列表推导式 注 前一for迭代值是后一for的迭代器 最后又加了一个list转str
-        self.KeySignal(ShortCutList, keytype)
+        self.PressButton.emit(ShortCutList, keytype)
 
     # ---- 自定义的函数和槽函数 ----
 
@@ -89,7 +81,8 @@ class QMyFunction(QWidget):
             aItem.setData(Qt.UserRole, codeinfo)
             self.ui.CListWidget.addItem(aItem)
 
-    @pyqtSlot(list, int)
+
+    @pyqtSlot(list, int)  # 简单信号连接 我给你挪到fundoc
     def KeySignal(self, text2send, keytype):  # 申错的太简单 而且现在还没做常量对换
         status = False
         patchtext = ""  # 将要预定义的字符串 因为信号处理顺序问题  所以需要这么写

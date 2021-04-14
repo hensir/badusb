@@ -904,7 +904,7 @@ const PROGMEM char usbHidReportDescriptor[USB_CFG_HID_REPORT_DESCRIPTOR_LENGTH] 
 
 
 
-/* Keyboard usage values, see usb.org's HID-usage-tables document, chapter
+/* Keyboard usage values, see usb.org's HID-usage-tables documentF, chapter
  * 10 Keyboard/Keypad Page for more codes.
  */
 #define MOD_CONTROL_LEFT    (1<<0)

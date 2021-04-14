@@ -1,6 +1,3 @@
-from __future__ import print_function
-import sys
-
 # order is important
 SPECIAL_BUTTONS = {
     'CONTROL_RIGHT': 'MOD_CONTROL_RIGHT',

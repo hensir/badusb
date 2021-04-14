@@ -1,16 +1,37 @@
 import sys
-from PyQt5.QtCore import pyqtSlot
+
+from PyQt5.QtCore import pyqtSlot, Qt, pyqtSignal
 from PyQt5.QtGui import QTextCursor
 from PyQt5.QtWidgets import QApplication, QMdiArea
-from myDocument import QMyDocument  # mdi文档
-from myFunction import QMyFunction  # 功能区组件
-from myFromDoc import FromDoc  # 小组件需要升个级
-from DuckToDigi import Duckyspark_translator
-from CodeList import DigiKeyboardH
-
+from documentF.myDocument import QMyDocument  # mdi文档
+from functionF.Enmu_Key import GlobalReplacement, DKPB
+from functionF.myFunction import QMyFunction  # 功能区组件
+from documentF.myFromDoc import FromDoc  # 小组件需要升个级
+from functionF.DuckToDigi import Duckyspark_translator
+from functionF.CodeList import DigiKeyboardH
 
 # duckytodigi的反向操作 不就可以生成ducky的脚本了吗
+
+# 这个fundoc和function 的区别到底是什么   function做好内务工作  像初始化列表那种
+# 而fundoc这边的共用信号 指的是 必须要用到 self的 无法通过信号进行操作的 方法定义
+# 具体区别主要表现和规定在 function一定要做好内务 然后其他的方法可能都要放到fundoc里
+# 全部信号连接在功能区信号那里做槽函数 function的限定我已经理出来了
+# 这样可以取消大量信号操作 而且那个defind列表可以动态添加了 就不用破坏文本文档本质了
+
+
+
+
+
+from functionF.mySelectDialog import QMySelectDialog
+
+
 class QMyFunDoc(QMyDocument):
+    ClickAppendPb = pyqtSignal(str)
+    ClickListItem = pyqtSignal(list)
+    ClickKeySignal = pyqtSignal(str)
+    AppendPatchKey = pyqtSignal(str)
+    PressButton = pyqtSignal(list, int)
+Z
     def __init__(self):
         super().__init__()
         # ---- 设置UI ----
@@ -26,14 +47,30 @@ class QMyFunDoc(QMyDocument):
         self.on_act_New_triggered()
         self.ui.mdi.tileSubWindows()
         # ---- 设置功能区信号 ----
-        self.fun.ClickListItem.connect(self.OpenListItem)  # 单信号结束
-        self.fun.AppendPatchKey.connect(self.AppendPatch)
         self.fun.ui.toDigiPB.clicked.connect(lambda: self.OpenListItem(
             [self.formDoc.windowTitle(), Duckyspark_translator(self.formDoc.tE.toPlainText())]))
+        self.fun.ClickListItem.connect(self.OpenListItem)  # 单信号结束
+        self.fun.AppendPatchKey.connect(self.AppendPatch)
+        self.fun.ui.ClickToInPB.clicked.connect(self.ClickToInPB_clicked)
+        self.fun.ui.LSEPushButton.clicked.connect(LSEPushButton_clicked)
 
-    def AppendPatch(self, patchstr):
+    def LSEPushButton_clicked(self):
+        text2 = "DigiKeyboard.print(\"%s\");" % (self.fun.ui.LineStrEdit.text())
+
+        self.ClickAppendPb.emit(text2 + "\n")
+
+
+def AppendPatch(self, patchstr):
         self.formDoc.tE.moveCursor(QTextCursor.Start, QTextCursor.MoveAnchor)
         self.formDoc.tE.insertPlainText(patchstr)
+
+    def ClickToInPB_clicked(self):
+        """这个是 点击输入按钮"""
+        self.__dialog = QMySelectDialog()  # 按键对话框
+        self.__dialog.setAttribute(Qt.WA_DeleteOnClose)  # 对话框关闭时自动删除
+        self.__dialog.ButtonClick.connect(self.KeySignal)
+        self.__dialog.changePBEnable.connect(self.fun.ui.ClickToInPB.setEnabled)
+        self.__dialog.show()
 
     @pyqtSlot(list)
     def OpenListItem(self, listitem):
@@ -76,7 +113,7 @@ class QMyFunDoc(QMyDocument):
             self.fun.ClickAppendPb.disconnect()
             self.fun.ClickKeySignal.disconnect()
             # print("上一个窗口组件信号已解除")
-        except TypeError as e:      # 新信号切换依旧有NoneType的问题
+        except TypeError as e:  # 新信号切换依旧有NoneType的问题
             print(e)
         except Exception as e:
             print(e)
@@ -89,6 +126,7 @@ class QMyFunDoc(QMyDocument):
     # def on_act_ViewHelp_triggered(self):
     #     pass
     #     # 打开一个新窗口里面有一个label 但是帮助菜单该怎么写
+
 
 
 if __name__ == "__main__":

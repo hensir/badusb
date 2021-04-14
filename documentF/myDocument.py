@@ -1,19 +1,16 @@
 import sys
 
 from PyQt5.QtCore import pyqtSlot, QDir, QFile, QIODevice
-from PyQt5.QtGui import QTextOption
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMdiArea, QMessageBox
 
-from myFromDoc import FromDoc
-from ui_document import Ui_MainWindow
+from documentF.myFromDoc import FromDoc
+from documentF.ui_document import Ui_MainWindow
 
 
 # if len(self.ui.mdi.subWindowList()) > 0:  # 如果有打开的MDI窗口，获取活动窗口
 #     self.formDoc = self.ui.mdi.activeSubWindow().widget()
 # 把这个东西做成一个装饰器 称为 子窗口操作保险装饰器
 # 新窗口 页面设置 打印 使用bing搜索 转到 查找等功能都没做
-
-# 自动换行有一个 setWordWrapMode    def setLineWrapMode (mode)
 
 
 class QMyDocument(QMainWindow):
@@ -132,28 +129,25 @@ class QMyDocument(QMainWindow):
         else:  # 子窗口模式
             self.ui.mdi.setViewMode(QMdiArea.SubWindowView)  # 子窗口模式
 
-    @pyqtSlot()
-    def on_act_Wrap_triggered(self):
-
-        pass
-
     # @pyqtSlot(type)
     def on_mdi_subWindowActivated(self, mdisubwindow):  # 参数为当前激活窗口
+        # 不求上一个窗口 全部断开
         try:
-            curmdiwidget = mdisubwindow.widget()
+            self.formDoc = mdisubwindow.widget()
         except AttributeError as e:
             print(e)  # 出现于关闭主窗口时 最后一次激活无效
+            print("获取mdi窗口组件失败")
+            self.formDoc = None
             return
-        mdisubwindowlist = self.ui.mdi.subWindowList(QMdiArea.ActivationHistoryOrder)
-        cnt = len(mdisubwindowlist)
-        if cnt == 0:
+
+        if len(self.ui.mdi.subWindowList(QMdiArea.ActivationHistoryOrder)) == 0:
             self.ui.StatusB.clearMessage()
         else:
-            self.formDoc = curmdiwidget
             self.ui.StatusB.showMessage(self.formDoc.currentFileName())  # 显示子窗口的文件名
-        # ---- 断开上一个窗口的信号连接 ----
-        try:  # 这个地方 其实改写 也简单 就是on_act_Undo的槽函数 然后函数里面有个form指向当前窗口 进行一个tE.undo 重复的写一下就好了
-            self.ui.act_Undo.triggered.disconnect()  # 或者是我没写下来的那个 就是可以检测一个槽函数有没有被链接的状态
+
+        # ---- 断开所有窗口的信号连接 ----
+        try:
+            self.ui.act_Undo.triggered.disconnect()
             self.ui.act_Redo.triggered.disconnect()
             self.ui.act_Cut.triggered.disconnect()
             self.ui.act_Copy.triggered.disconnect()
@@ -171,17 +165,17 @@ class QMyDocument(QMainWindow):
             print(e)
 
         # ---- 当前激活窗口的信号连接 ----
-        self.ui.act_Undo.triggered.connect(curmdiwidget.tE.undo)
-        self.ui.act_Redo.triggered.connect(curmdiwidget.tE.redo)
-        self.ui.act_Cut.triggered.connect(curmdiwidget.tE.cut)
-        self.ui.act_Copy.triggered.connect(curmdiwidget.tE.copy)
-        self.ui.act_Paste.triggered.connect(curmdiwidget.tE.paste)
-        self.ui.act_SelectAll.triggered.connect(curmdiwidget.tE.selectAll)
-        self.ui.act_Font.triggered.connect(curmdiwidget.textSetFont)
-        self.ui.act_ZoomIn.triggered.connect(curmdiwidget.tE.zoomIn)
-        self.ui.act_ZoomOut.triggered.connect(curmdiwidget.tE.zoomOut)
-        self.ui.act_DefaultZoom.triggered.connect(lambda: curmdiwidget.tE.setFont(curmdiwidget.font))
-        self.ui.act_Wrap.triggered.connect(curmdiwidget.mysetWordWrapMode)
+        self.ui.act_Undo.triggered.connect(self.formDoc.tE.undo)
+        self.ui.act_Redo.triggered.connect(self.formDoc.tE.redo)
+        self.ui.act_Cut.triggered.connect(self.formDoc.tE.cut)
+        self.ui.act_Copy.triggered.connect(self.formDoc.tE.copy)
+        self.ui.act_Paste.triggered.connect(self.formDoc.tE.paste)
+        self.ui.act_SelectAll.triggered.connect(self.formDoc.tE.selectAll)
+        self.ui.act_Font.triggered.connect(self.formDoc.textSetFont)
+        self.ui.act_ZoomIn.triggered.connect(self.formDoc.tE.zoomIn)
+        self.ui.act_ZoomOut.triggered.connect(self.formDoc.tE.zoomOut)
+        self.ui.act_DefaultZoom.triggered.connect(lambda: self.formDoc.tE.setFont(self.formDoc.font))
+        self.ui.act_Wrap.triggered.connect(self.formDoc.mysetWordWrapMode)
         print("当前窗口组件信号已连接")
 
 
