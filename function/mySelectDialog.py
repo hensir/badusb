@@ -1,8 +1,8 @@
 import sys
 from PyQt5.QtWidgets import QDialog, QApplication, QGridLayout, QGroupBox, QPushButton, QDesktopWidget, QComboBox
 from PyQt5.QtCore import pyqtSlot, pyqtSignal
-from functionF.ui_selectdialog import Ui_Dialog
-from functionF.Enmu_Key import NeedShift, DKPB
+from function.ui_selectdialog import Ui_Dialog
+from function.Enmu_Key import NeedShift, DKPB
 
 
 class QMySelectDialog(QDialog):

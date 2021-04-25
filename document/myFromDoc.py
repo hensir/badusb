@@ -14,7 +14,6 @@ class FromDoc(QMainWindow):
         self.setAttribute(Qt.WA_DeleteOnClose)  # MDI子窗口会被自动删除
         self.__fileOpened = ""
         self.currentFilePath = ""
-        self.defined = []  # 已经出现的按键 绑定给本体了
 
     def setupUi(self):
         self.resize(666, 401)

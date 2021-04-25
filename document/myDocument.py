@@ -3,8 +3,8 @@ import sys
 from PyQt5.QtCore import pyqtSlot, QDir, QFile, QIODevice
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMdiArea, QMessageBox
 
-from documentF.myFromDoc import FromDoc
-from documentF.ui_document import Ui_MainWindow
+from document.myFromDoc import FromDoc
+from document.ui_document import Ui_MainWindow
 
 
 # if len(self.ui.mdi.subWindowList()) > 0:  # 如果有打开的MDI窗口，获取活动窗口
