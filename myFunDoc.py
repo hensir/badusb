@@ -11,7 +11,7 @@ from function.myFunction import QMyFunction  # 功能区组件
 from function.CodeList import DigiKeyboardH
 from function.mySelectDialog import QMySelectDialog
 
-
+# 这个 包导入不对劲
 # duckytodigi的反向操作 不就可以生成ducky的脚本了吗
 
 
